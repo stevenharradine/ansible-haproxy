@@ -42,13 +42,13 @@ backend {{ haproxy_backend_name }}
 {% endif %}
 
 {% if haproxy_load_balancer_enabled %}
-  server application-load-balancer {{ haproxy_backend_server_load_balancer }}
+  server application-load-balancer {{ haproxy_backend_server_load_balancer }} {{ haproxy_resolvers }}
 {% endif %}
 
 {% if haproxy_backend_host_range_enabled %}
   {% for octet in range(haproxy_backend_host_range_start, haproxy_backend_host_range_end)%}
-  server {{ haproxy_backend_network }}.{{ octet }} {{ haproxy_backend_network }}.{{ octet }}:{{ haproxy_backend_server_port }} check
+  server {{ haproxy_backend_network }}.{{ octet }} {{ haproxy_backend_network }}.{{ octet }}:{{ haproxy_backend_server_port }} check {{ haproxy_resolvers }}
   {% endfor %}
 {% else %}
-  server application {{ haproxy_backend_server_direct }}{% if haproxy_load_balancer_enabled %} disabled{% endif %}
+  server application {{ haproxy_backend_server_direct }}{% if haproxy_load_balancer_enabled %} disabled{% endif %} {{ haproxy_resolvers }}
 {% endif %}

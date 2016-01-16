@@ -71,3 +71,6 @@ haproxy_allow_access_to_restricted_paths_from_ips: []
 
 haproxy_restricted_paths_for_security:
   - /.git/
+
+haproxy_resolvers_enabled: no
+haproxy_resolvers: "{% if haproxy_resolvers_enabled %}resolvers google_dns{% end if %}"
